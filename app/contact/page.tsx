@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ServerInfo from "../komponen/ServerInfo";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -9,6 +10,10 @@ export default function ContactPage() {
     <main>
       <h1>Contact Us</h1>
 
+      {/* Server Component */}
+      <ServerInfo />
+
+      {/* Client Interaksi */}
       <input
         type="text"
         placeholder="Masukkan nama"
