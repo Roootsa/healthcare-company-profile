@@ -1,17 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
-  background: linear-gradient(to bottom, #f9fafb, #e0f2fe);
-  color: #111827;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-* {
-  transition: all 0.2s ease-in-out;
-}
-
-main {
-  padding-top: 20px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+   background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
 }
