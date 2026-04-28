@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import "./globals.css"; // 
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MediCare Startup",
@@ -14,30 +14,54 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body style={{ margin: 0, fontFamily: "Arial, sans-serif" }}>
 
         {/* HEADER */}
-      <header className="bg-blue-600 text-white shadow-md">
-       <nav className="flex justify-between items-center max-w-5xl mx-auto p-4">
-        <h1 className="font-bold text-xl tracking-wide">MediCare</h1>
-   <div className="flex gap-6 text-sm font-medium">
-      <Link href="/" className="hover:text-blue-200">Home</Link>
-      <Link href="/about" className="hover:text-blue-200">About</Link>
-      <Link href="/services" className="hover:text-blue-200">Services</Link>
-      <Link href="/contact" className="hover:text-blue-200">Contact</Link>
-    </div>
-  </nav>
-</header>
+        <header style={{ background: "#2563eb", color: "white" }}>
+          <nav
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              maxWidth: "900px",
+              margin: "auto",
+              padding: "15px",
+            }}
+          >
+            <h1 style={{ fontWeight: "bold" }}>MediCare</h1>
 
-        {/* MAIN CONTENT */}
-        <main className="flex-grow max-w-5xl mx-auto p-4">
+            <div style={{ display: "flex", gap: "15px" }}>
+              <Link href="/" style={{ color: "white", textDecoration: "none" }}>Home</Link>
+              <Link href="/about" style={{ color: "white", textDecoration: "none" }}>About</Link>
+              <Link href="/services" style={{ color: "white", textDecoration: "none" }}>Services</Link>
+              <Link href="/contact" style={{ color: "white", textDecoration: "none" }}>Contact</Link>
+            </div>
+          </nav>
+        </header>
+
+        {/* MAIN */}
+        <main
+          style={{
+            maxWidth: "900px",
+            margin: "auto",
+            padding: "40px 20px",
+            minHeight: "80vh",
+            textAlign: "center",
+          }}
+        >
           {children}
         </main>
 
         {/* FOOTER */}
-       <footer className="bg-white border-t text-center p-4 text-sm text-gray-500">
-       © 2026 MediCare Startup. All rights reserved.
-      </footer>
+        <footer
+          style={{
+            textAlign: "center",
+            padding: "15px",
+            background: "#f1f5f9",
+          }}
+        >
+          © 2026 MediCare Startup. All rights reserved.
+        </footer>
 
       </body>
     </html>
