@@ -1,21 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { useFormStatus } from "react-dom";
 
-export default function ContactForm() {
-  const [name, setName] = useState("");
+function SubmitButton() {
+  const { pending } = useFormStatus();
 
   return (
-    <div>
+    <button
+      type="submit"
+      style={{
+        background: "#2563eb",
+        color: "white",
+        padding: "10px",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer",
+      }}
+      disabled={pending}
+    >
+      {pending ? "Sending..." : "Send Message"}
+    </button>
+  );
+}
+
+export default function ContactForm({ action }: any) {
+  return (
+    <form
+      action={action}
+      style={{
+        maxWidth: "400px",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
       <input
         type="text"
-        placeholder="Masukkan nama"
-        onChange={(e) => setName(e.target.value)}
+        name="name"
+        placeholder="Your Name"
+        style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
       />
 
-      <button onClick={() => alert("Halo " + name)}>
-        Klik Saya
-      </button>
-    </div>
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
+      />
+
+      <textarea
+        name="message"
+        placeholder="Your Message"
+        style={{ padding: "10px", borderRadius: "6px", border: "1px solid #ccc" }}
+      />
+
+      <SubmitButton />
+    </form>
   );
 }
