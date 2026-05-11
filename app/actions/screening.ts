@@ -1,23 +1,25 @@
 "use server";
-import { supabase } from "@/lib/supabase";
 
-export async function submitScreening(data: any) {
-  try {
-    const { error } = await supabase
-      .from("tb_screenings") // Sesuaikan nama tabelmu
-      .insert([{
-        name: data.name,
-        age: parseInt(data.age),
-        gender: data.gender,
-        score: data.score,
-        risk_level: data.riskLevel,
-        created_at: new Date()
-      }]);
+import { z } from "zod";
 
-    if (error) throw error;
-    return { success: true };
-  } catch (err) {
-    console.error(err);
-    return { success: false };
+const screeningSchema = z.object({
+  name: z.string().min(1, "Nama tidak boleh kosong"),
+  age: z.string().min(1, "Usia tidak boleh kosong"),
+  gender: z.string().min(1, "Gender tidak boleh kosong"),
+  score: z.number(),
+  riskLevel: z.string(),
+});
+
+export async function submitScreening(data: Record<string, any>) {
+  const result = screeningSchema.safeParse(data);
+
+  if (!result.success) {
+    return {
+      success: false,
+      errors: result.error.flatten().fieldErrors,
+    };
   }
+
+  console.log("✅ Screening data valid:", result.data);
+  return { success: true, errors: null };
 }
