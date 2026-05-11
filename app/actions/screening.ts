@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 "use server";
 
 import { z } from "zod";
@@ -22,4 +23,32 @@ export async function submitScreening(data: Record<string, any>) {
 
   console.log("✅ Screening data valid:", result.data);
   return { success: true, errors: null };
+=======
+'use server';
+
+import { supabase } from '@/lib/supabase'; // sesuaikan path-nya
+
+export async function submitScreening(formData: any) {
+  const { name, age, gender, score, riskLevel, ...answers } = formData;
+
+  const { data, error } = await supabase
+    .from('screenings')
+    .insert([
+      { 
+        name, 
+        age: parseInt(age), 
+        gender, 
+        score, 
+        risk_level: riskLevel,
+        answers: answers // Ini akan menyimpan q1-q10 dalam bentuk JSON
+      }
+    ]);
+
+  if (error) {
+    console.error('Error saving to Supabase:', error);
+    throw new Error('Gagal menyimpan data');
+  }
+
+  return data;
+>>>>>>> Stashed changes
 }
