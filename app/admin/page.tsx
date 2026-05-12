@@ -3,25 +3,14 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
-<<<<<<< HEAD
-
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ total: 0, high: 0, medium: 0, low: 0 });
   const [recentData, setRecentData] = useState<any[]>([]);
-=======
-export default function AdminDashboard() {
-  const [stats, setStats] = useState({ total: 0, high: 0, medium: 0, low: 0 });
-  const [recentData, setRecentData] = useState([]);
->>>>>>> a5d4cad75a4811f96ea574fdb2190cab0a3a520d
 
   // Hook Next.js untuk manipulasi URL
   const searchParams = useSearchParams();
   const pathname = usePathname();
-<<<<<<< HEAD
   const router = useRouter();
-=======
-  const { replace } = useRouter();
->>>>>>> a5d4cad75a4811f96ea574fdb2190cab0a3a520d
 
   // Mengambil query pencarian dari URL saat ini
   const searchQuery = searchParams.get('query') || '';
@@ -35,16 +24,16 @@ export default function AdminDashboard() {
       params.delete('query');
     }
     // Mengubah URL tanpa reload halaman
-<<<<<<< HEAD
     router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleLogout = () => {
     document.cookie = "session=; path=/; max-age=0";
     router.push("/");
-=======
-    replace(`${pathname}?${params.toString()}`);
->>>>>>> a5d4cad75a4811f96ea574fdb2190cab0a3a520d
+  };
+
+  const handleBack = () => {
+    router.back();
   };
 
   useEffect(() => {
@@ -78,19 +67,23 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-8 bg-slate-50 min-h-screen">
-<<<<<<< HEAD
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-black text-slate-900 tracking-tight">Dashboard Analitik TBC</h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-semibold transition"
-        >
-          Logout
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleBack}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-xl font-semibold transition"
+          >
+            Kembali
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-semibold transition"
+          >
+            Logout
+          </button>
+        </div>
       </div>
-=======
-      <h1 className="text-3xl font-black text-slate-900 mb-8 tracking-tight">Dashboard Analitik TBC</h1>
->>>>>>> a5d4cad75a4811f96ea574fdb2190cab0a3a520d
       
       {/* Kartu Statistik */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
