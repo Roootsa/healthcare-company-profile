@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  /* Mendaftarkan font agar bisa dipakai sebagai class (font-playfair & font-dm-sans) */
+  --font-playfair: var(--font-playfair);
+  --font-dm-sans: var(--font-dm-sans);
+  
+  /* Warna kustom sesuai tema TBCCare */
+  --color-tbc-blue: #0284c7;
+  --color-tbc-bg: #f0f4f8;
+}
+
+@layer base {
+  body {
+    @apply text-slate-800 antialiased;
+    background-color: var(--color-tbc-bg);
+  }
+}
+
+@layer components {
+  /* Efek Glassmorphism Premium persis dari index.txt */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+  }
+
+  /* Animasi halus saat halaman dimuat */
+  .fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
