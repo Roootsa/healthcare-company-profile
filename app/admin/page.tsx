@@ -12,7 +12,10 @@ interface ScreeningData {
   risk_level: string;
 }
 
-export default function AdminDashboard() {
+export default async function Page() {
+	// temporary development delay to show loading skeleton
+	await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const [stats, setStats] = useState({ total: 0, high: 0, medium: 0, low: 0 });
   const [recentData, setRecentData] = useState<ScreeningData[]>([]);
 
