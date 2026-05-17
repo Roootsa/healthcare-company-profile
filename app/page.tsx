@@ -43,13 +43,17 @@ export default function Home() {
               Deteksi dini tuberkulosis dengan mudah, cepat, dan rahasia. Lindungi diri Anda dan orang-orang tersayang di sekitar Anda sekarang juga.
             </p>
             
-            {/* 2 TOMBOL UTAMA */}
+            {/* 3 TOMBOL UTAMA (Skrining, Edukasi, & Kontak) */}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link href="/screening" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 px-10 rounded-full shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-1">
+              <Link href="/screening" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg shadow-blue-500/30 transition-all transform hover:-translate-y-1">
                 Mulai Skrining
               </Link>
-              <Link href="/education" className="w-full sm:w-auto bg-white hover:bg-slate-50 text-blue-600 font-bold text-lg py-4 px-10 rounded-full shadow-md border border-blue-200 transition-all transform hover:-translate-y-1">
+              <Link href="/education" className="w-full sm:w-auto bg-white hover:bg-slate-50 text-blue-600 font-bold text-lg py-4 px-8 rounded-full shadow-md border border-blue-200 transition-all transform hover:-translate-y-1">
                 Halaman Edukasi
+              </Link>
+              {/* Ini tombol barunya: */}
+              <Link href="/contact" className="w-full sm:w-auto bg-slate-900 hover:bg-black text-white font-bold text-lg py-4 px-8 rounded-full shadow-lg transition-all transform hover:-translate-y-1">
+                Hubungi Kami
               </Link>
             </div>
 

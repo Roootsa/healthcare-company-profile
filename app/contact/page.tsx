@@ -14,21 +14,43 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setPending(true);
     setErrors({});
 
-    const formData = new FormData(e.currentTarget);
-    const result = await submitContact(formData);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    setPending(false);
+    // --- OPTIMISTIC UI: Berikan feedback sukses instan tanpa nunggu server ---
+    setSuccess(true);
+    setPending(true);
+    form.reset(); // Form langsung kosong seketika
 
-    if (!result.success) {
-      setErrors(result.errors ?? {});
-    } else {
-      setSuccess(true);
-      e.currentTarget.reset();
-      setTimeout(() => setSuccess(false), 4000);
-    }
+    // Tombol "Mengirim..." hanya berkedip sebentar untuk efek visual yang cepat
+    setTimeout(() => setPending(false), 400);
+
+    // Proses pengiriman data ke server berjalan di background tanpa 'await'
+    submitContact(formData)
+      .then((result) => {
+        // Jika ternyata server mendeteksi ada error validasi (misal email salah format)
+        if (!result.success) {
+          setSuccess(false); // Tarik kembali status sukses
+          setErrors(result.errors ?? {}); // Tampilkan error dari server
+          
+          // Kembalikan teks yang diinput sebelumnya agar user tidak perlu mengetik ulang
+          const nameInput = form.elements.namedItem("name") as HTMLInputElement;
+          const emailInput = form.elements.namedItem("email") as HTMLInputElement;
+          const messageInput = form.elements.namedItem("message") as HTMLTextAreaElement;
+          if (nameInput) nameInput.value = formData.get("name") as string;
+          if (emailInput) emailInput.value = formData.get("email") as string;
+          if (messageInput) messageInput.value = formData.get("message") as string;
+        }
+      })
+      .catch((err) => {
+        console.error("Gagal mengirim ke server:", err);
+        setSuccess(false);
+      });
+
+    // Kotak pesan sukses otomatis hilang setelah 4 detik
+    setTimeout(() => setSuccess(false), 4000);
   }
 
   const inputStyle = {
@@ -47,7 +69,7 @@ export default function Contact() {
   };
 
   return (
-    <main style={{ padding: "60px 20px", textAlign: "center", fontFamily: "sans-serif" }}>
+    <main style={{ padding: "100px 20px", textAlign: "center", fontFamily: "sans-serif" }}>
       <h1 style={{ fontSize: "32px", marginBottom: "8px" }}>Contact Us</h1>
       <p style={{ color: "#6b7280", marginBottom: "30px" }}>
         Hubungi kami untuk informasi lebih lanjut.

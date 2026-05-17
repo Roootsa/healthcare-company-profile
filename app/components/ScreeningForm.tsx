@@ -40,7 +40,7 @@ export default function ScreeningForm() {
     const incomplete = tbQuestions.find(q => formData[q.id] === null);
     if (incomplete) return alert("Harap jawab semua 10 pertanyaan.");
 
-    setIsSubmitting(true);
+    setIsSubmitting(true); // Tombol berubah jadi "Memproses..." sedetik
 
     const multipliers = [0, 0.3, 0.7, 1]; 
     let score = 0;
@@ -66,14 +66,13 @@ export default function ScreeningForm() {
       color = "text-emerald-600 bg-emerald-50 border-emerald-200";
     }
 
-    // 1. Simpan ke database
-    try {
-      await submitScreening({ ...formData, score, riskLevel: severity });
-    } catch (err) {
-      console.error("DB Error:", err);
-    }
+    // --- OPTIMISTIC UI: Pindahkan DB ke Background ---
+    // Hapus 'await' supaya UI tidak terblokir menunggu respon database
+    submitScreening({ ...formData, score, riskLevel: severity }).catch(err => {
+      console.error("DB Error (Background):", err);
+    });
 
-    // 2. Simpan ke LocalStorage
+    // 2. Simpan ke LocalStorage langsung
     const historyItem = {
       date: new Date().toLocaleDateString('id-ID', { 
         day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' 
@@ -86,7 +85,7 @@ export default function ScreeningForm() {
     const newHistory = [historyItem, ...existingHistory].slice(0, 5); 
     localStorage.setItem('tb_history', JSON.stringify(newHistory));
 
-    // 3. Set data hasil dan pindah step
+    // 3. Set data hasil dan INSTAN pindah step
     setResultData({ score, severity, advice, color });
     setStep(3);
     setIsSubmitting(false);
